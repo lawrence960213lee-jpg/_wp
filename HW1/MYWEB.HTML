@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李宜倫的個人網站</title>
+    <style>
+        /* 定義全域變數 */
+        :root {
+            --primary-color: #2c3e50; /* 主要文字顏色 */
+            --accent-color: #e67e22;  /* 強調顏色 (例如按鈕)，選用了一個溫暖的橘色 */
+            --card-bg: rgba(255, 255, 255, 0.95); /* 卡片背景，帶有一點透明度 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Microsoft JhengHei, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--primary-color);
+            
+            /* --- 背景圖片設定區 --- */
+            /* 請確保 background.jpg 與此 html 檔案在同一個資料夾 */
+            background-image: url('background.jpg'); 
+            
+            /* 如果圖片沒載入，使用的備用漸層背景 */
+            background-color: #c3cfe2; 
+            
+            /* 背景圖片設定：覆蓋全螢幕、置中、不重複 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* 背景固定，不隨捲軸捲動 */
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            /* 較深的陰影，確保在複雜背景上浮現出來 */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
+            /* 模糊背景效果 (僅部分現代瀏覽器支援，增加質感) */
+            backdrop-filter: blur(5px); 
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            margin: 0 0 0.5rem;
+            letter-spacing: 3px;
+            font-size: 2.2rem;
+            color: #1a252f;
+        }
+
+        .school-info {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .details {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.03); /* 淡淡的底色區隔 */
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .details p {
+            margin: 0.8rem 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        .details p:first-child { margin-top: 0; }
+        .details p:last-child { margin-bottom: 0; }
+
+        .label {
+            font-weight: bold;
+            width: 70px; /* 稍微加寬 label */
+            color: var(--accent-color);
+            display: inline-block;
+        }
+
+        .info-content {
+            color: var(--primary-color);
+            word-break: break-all; /* 防止 Email 過長衝出範圍 */
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn:hover {
+            background: #d35400; /* 深一點的橘色 */
+            transform: scale(1.05);
+        }
+
+        /* 手機版的小調整 */
+        @media (max-width: 480px) {
+            .card {
+                padding: 2rem 1.5rem;
+            }
+            h1 { font-size: 1.8rem; }
+            .details { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>李宜倫</h1>
+        <div class="school-info">國立金門大學</div>
+        
+        <div class="details">
+            <p><span class="label">學號</span> <span class="info-content">111410502</span></p>
+            <p><span class="label">信箱</span> <span class="info-content">lawrence960213.lee@gmail.com</span></p>
+        </div>
+
+        <a href="mailto:lawrence960213.lee@gmail.com" class="btn">發送郵件聯絡</a>
+    </div>
+
+</body>
+</html>
