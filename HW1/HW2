@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳用餐體驗調查</title>
+    <style>
+        /* --- CSS 樣式設定 --- */
+        :root {
+            --primary-color: #d35400; /* 暖橘色 */
+            --secondary-color: #f39c12; /* 金黃色 */
+            --bg-color: #fdfaf6;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .survey-card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        input[type="text"], 
+        input[type="date"], 
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(211, 84, 0, 0.1);
+        }
+
+        /* --- 星星評分 CSS --- */
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff9f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row-reverse; /* 關鍵：讓選取的星星往左填滿 */
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 28px;
+            color: #ddd;
+            cursor: pointer;
+            padding: 0 2px;
+            margin-bottom: 0;
+            transition: color 0.2s;
+        }
+
+        /* 滑鼠懸停與選中後的變色邏輯 */
+        .stars input:checked ~ label,
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: var(--secondary-color);
+        }
+
+        /* 送出按鈕 */
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="survey-card">
+    <div class="header">
+        <h1>🍴 美味時光調查局</h1>
+        <p>感謝您的光臨，請留下您寶貴的用餐心得</p>
+    </div>
+
+    <form id="surveyForm">
+        <div class="form-group">
+            <label for="userName">顧客姓名</label>
+            <input type="text" id="userName" placeholder="請輸入您的稱呼" required>
+        </div>
+
+        <div class="form-group">
+            <label>餐點美味程度</label>
+            <div class="rating-container">
+                <span>您的滿意度？</span>
+                <div class="stars">
+                    <input type="radio" name="food" id="f5" value="5"><label for="f5">★</label>
+                    <input type="radio" name="food" id="f4" value="4"><label for="f4">★</label>
+                    <input type="radio" name="food" id="f3" value="3"><label for="f3">★</label>
+                    <input type="radio" name="food" id="f2" value="2"><label for="f2">★</label>
+                    <input type="radio" name="food" id="f1" value="1"><label for="f1">★</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>服務人員品質</label>
+            <div class="rating-container">
+                <span>您的滿意度？</span>
+                <div class="stars">
+                    <input type="radio" name="service" id="s5" value="5"><label for="s5">★</label>
+                    <input type="radio" name="service" id="s4" value="4"><label for="s4">★</label>
+                    <input type="radio" name="service" id="s3" value="3"><label for="s3">★</label>
+                    <input type="radio" name="service" id="s2" value="2"><label for="s2">★</label>
+                    <input type="radio" name="service" id="s1" value="1"><label for="s1">★</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="feedback">給我們的悄悄話</label>
+            <textarea id="feedback" rows="4" placeholder="歡迎分享任何想對我們說的話..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">送出回饋</button>
+    </form>
+</div>
+
+<script>
+    // 簡單的送出處理
+    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('userName').value;
+        alert(`謝謝您，${name}！我們已收到您的回饋，祝您有美好的一天！`);
+        this.reset(); // 清空表單
+    });
+</script>
+
+</body>
+</html>
