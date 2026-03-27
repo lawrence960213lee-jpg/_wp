@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLGG</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="/" class="logo">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <a href="/" class="nav-link">🏠 首頁</a>
+      <% if (user) { %>
+        <a href="/public" class="nav-link">🌐 公共貼文</a>
+        <a href="/search" class="nav-link">🔍 搜尋好友</a>
+        <a href="/new" class="nav-link">✏️ 發文</a>
+        <a href="/profile" class="nav-link">👤 個人資料</a>
+        <a href="/logout" class="nav-link">🚪 登出</a>
+      <% } else { %>
+        <a href="/login" class="nav-link">🔑 登入</a>
+        <a href="/register" class="nav-link">📝 註冊</a>
+      <% } %>
+      <button class="theme-toggle" onclick="document.body.classList.toggle('dark')">🌙</button>
+    </div>
+    <div class="main">
+      <div class="header">
+        <h1>首頁</h1>
+      </div>
+      <% if (user && personalPosts) { %>
+        <h2 style="padding: 15px;">我的貼文</h2>
+        <% personalPosts.forEach(post => { %>
+          <div class="post" onclick="location.href='/post/<%= post.id %>'">
+            <div class="post-header">
+              <div class="post-avatar">?</div>
+              <span class="post-name"><%= user %></span>
+              <span class="post-handle">· <%= post.created_at %></span>
+            </div>
+            <div class="post-content"><%= post.title %></div>
+            <% if (post.image) { %>
+              <img src="<%= post.image %>" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
+            <% } %>
+          </div>
+        <% }) %>
+        <% if (personalPosts.length === 0) { %>
+          <p style="padding: 15px;">尚無貼文</p>
+        <% } %>
+        <h2 style="padding: 15px;">公共貼文</h2>
+        <% publicPosts.forEach(post => { %>
+          <div class="post" onclick="location.href='/post/<%= post.id %>'">
+            <div class="post-header">
+              <div class="post-avatar">?</div>
+              <span class="post-name">使用者</span>
+              <span class="post-handle">· <%= post.created_at %></span>
+            </div>
+            <div class="post-content"><%= post.title %></div>
+            <% if (post.image) { %>
+              <img src="<%= post.image %>" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
+            <% } %>
+          </div>
+        <% }) %>
+        <% if (publicPosts.length === 0) { %>
+          <p style="padding: 15px;">尚無公共貼文</p>
+        <% } %>
+      <% } else { %>
+        <% if (publicPosts) { %>
+          <% publicPosts.forEach(post => { %>
+            <div class="post" onclick="location.href='/post/<%= post.id %>'">
+              <div class="post-header">
+                <div class="post-avatar">?</div>
+                <span class="post-name">使用者</span>
+                <span class="post-handle">· <%= post.created_at %></span>
+              </div>
+              <div class="post-content"><%= post.title %></div>
+              <% if (post.image) { %>
+                <img src="<%= post.image %>" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
+              <% } %>
+            </div>
+          <% }) %>
+          <% if (publicPosts.length === 0) { %>
+            <p style="padding: 15px;">尚無公共貼文，<a href="/register">趕快註冊</a>來發文吧！</p>
+          <% } %>
+        <% } else { %>
+          <p style="padding: 15px;">登入後可發表貼文</p>
+        <% } %>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

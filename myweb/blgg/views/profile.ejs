@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= user %> - BLGG</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="/" class="logo">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <a href="/" class="nav-link">🏠 首頁</a>
+      <a href="/public" class="nav-link">🌐 公共貼文</a>
+      <a href="/search" class="nav-link">🔍 搜尋好友</a>
+      <a href="/new" class="nav-link">✏️ 發文</a>
+      <a href="/logout" class="nav-link">🚪 登出</a>
+      <button class="theme-toggle" onclick="document.body.classList.toggle('dark')">🌙</button>
+    </div>
+    <div class="main">
+      <div class="profile-header">
+        <div class="profile-avatar"><%= user.charAt(0).toUpperCase() %></div>
+        <div class="profile-info">
+          <h1><%= user %></h1>
+          <form action="/profile" method="POST" style="margin-top: 10px;">
+            <textarea name="bio" class="form-input" placeholder="編輯個人簡介..." style="min-height: 60px; width: 100%;"><%= userData?.bio || '' %></textarea>
+            <button type="submit" class="btn-twitter" style="margin-top: 10px; width: auto; padding: 8px 16px; font-size: 14px;">儲存</button>
+          </form>
+        </div>
+      </div>
+      <div class="profile-posts">
+        <h2 style="text-align: center; padding: 15px; border-top: 1px solid #e1e8ed;">我的貼文</h2>
+        <% posts.forEach(post => { %>
+          <div class="post" onclick="location.href='/post/<%= post.id %>'">
+            <div class="post-header">
+              <div class="post-avatar"><%= user.charAt(0).toUpperCase() %></div>
+              <span class="post-name"><%= user %></span>
+              <span class="post-handle">· <%= post.created_at %></span>
+              <span class="badge <%= post.is_public ? 'public' : 'private' %>"><%= post.is_public ? '公開' : '私人' %></span>
+            </div>
+            <div class="post-content"><%= post.title %></div>
+            <a href="/delete/<%= post.id %>" class="delete-btn" onclick="event.stopPropagation();return confirm('確定刪除？')">🗑️ 刪除</a>
+          </div>
+        <% }) %>
+        <% if (posts.length === 0) { %>
+          <p style="padding: 15px; text-align: center;">尚無貼文</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

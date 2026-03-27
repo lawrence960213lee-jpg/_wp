@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜尋好友 - BLGG</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="/" class="logo">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+      <a href="/" class="nav-link">🏠 首頁</a>
+      <a href="/public" class="nav-link">🌐 公共貼文</a>
+      <a href="/search" class="nav-link">🔍 搜尋好友</a>
+      <a href="/new" class="nav-link">✏️ 發文</a>
+      <a href="/profile" class="nav-link">👤 個人資料</a>
+      <a href="/logout" class="nav-link">🚪 登出</a>
+      <button class="theme-toggle" onclick="document.body.classList.toggle('dark')">🌙</button>
+    </div>
+    <div class="main">
+      <div class="header">
+        <h1>搜尋好友</h1>
+      </div>
+      <form action="/search" method="GET" style="padding: 15px;">
+        <input type="text" name="q" placeholder="輸入用戶名稱" value="<%= q || '' %>" style="padding: 10px; width: 70%; border-radius: 5px; border: 1px solid #ccc;">
+        <button type="submit" style="padding: 10px 20px; border-radius: 5px; background: #1d9bf0; color: white; border: none; cursor: pointer;">搜尋</button>
+      </form>
+      <% if (friends.length > 0) { %>
+        <h2 style="padding: 15px;">我的好友</h2>
+        <% friends.forEach(friend => { %>
+          <div class="post">
+            <div class="post-header">
+              <div class="post-avatar">?</div>
+              <span class="post-name"><%= friend.username %></span>
+            </div>
+            <% if (friend.bio) { %>
+              <div class="post-content"><%= friend.bio %></div>
+            <% } %>
+            <form action="/remove-friend/<%= friend.id %>" method="POST" style="margin-top: 10px;">
+              <button type="submit" style="padding: 5px 10px; background: #f00; color: white; border: none; border-radius: 5px; cursor: pointer;">移除好友</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } %>
+      <% if (users.length > 0) { %>
+        <h2 style="padding: 15px;">搜尋結果</h2>
+        <% users.forEach(u => { %>
+          <div class="post">
+            <div class="post-header">
+              <div class="post-avatar">?</div>
+              <span class="post-name"><%= u.username %></span>
+            </div>
+            <% if (u.bio) { %>
+              <div class="post-content"><%= u.bio %></div>
+            <% } %>
+            <form action="/add-friend/<%= u.id %>" method="POST" style="margin-top: 10px;">
+              <button type="submit" style="padding: 5px 10px; background: #1d9bf0; color: white; border: none; border-radius: 5px; cursor: pointer;">加為好友</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } else if (q) { %>
+        <p style="padding: 15px;">找不到符合的使用者</p>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
